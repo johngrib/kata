@@ -1,21 +1,21 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
-type convert func(int) int
+type convert func(int, string) (int, string)
 
-func calc(symbol string, symbolNumber int, inputNumber int) int {
+func calc(symbol string, symbolNumber int, inputNumber int, inputStr string) (int, string) {
 	count := inputNumber / symbolNumber
-	fmt.Print(strings.Repeat(symbol, count))
-	return inputNumber % symbolNumber
+	remain := inputNumber % symbolNumber
+	result := inputStr + strings.Repeat(symbol, count)
+	return remain, result
 }
 
 func roman(symbol string, symbolNumber int) convert {
-	return func(inputNumber int) int {
-		return calc(symbol, symbolNumber, inputNumber)
+	return func(inputNumber int, inputStr string) (int, string) {
+		return calc(symbol, symbolNumber, inputNumber, inputStr)
 	}
 }
 
@@ -33,15 +33,16 @@ var setting = []convert{
 	roman("V", 5),
 	roman("IV", 4),
 	roman("I", 1),
-	func(inputNumber int) int {
-		fmt.Println("")
-		return inputNumber
-	},
 }
 
-func printRoman(inputNumber int) {
-	res := inputNumber
+func printRoman(inputNumber int) string {
+	remain := inputNumber
+	result := ""
 	for _, belt := range setting {
-		res = belt(res)
+		if remain < 1 {
+			return result
+		}
+		remain, result = belt(remain, result)
 	}
+	return result
 }
