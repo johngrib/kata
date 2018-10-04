@@ -1,48 +1,54 @@
 package main
 
-import (
-	"strings"
-)
+import "strings"
 
-type convert func(int, string) (int, string)
+type Number struct {
+	exp           string
+	value, remain int
+}
+type Converter func(Number) Number
 
-func calc(symbol string, symbolNumber int, inputNumber int, inputStr string) (int, string) {
-	count := inputNumber / symbolNumber
-	remain := inputNumber % symbolNumber
-	result := inputStr + strings.Repeat(symbol, count)
-	return remain, result
+func calc(config Number, input Number) Number {
+	count := input.remain / config.value
+	input.exp = input.exp + strings.Repeat(config.exp, count)
+	input.remain = input.remain % config.value
+	return input
 }
 
-func roman(symbol string, symbolNumber int) convert {
-	return func(inputNumber int, inputStr string) (int, string) {
-		return calc(symbol, symbolNumber, inputNumber, inputStr)
+func trans(symbol string, symbolNumber int) Converter {
+
+	config := Number{exp: symbol, value: symbolNumber}
+
+	return func(input Number) Number {
+		return calc(config, input)
 	}
 }
 
-var setting = []convert{
-	roman("M", 1000),
-	roman("CM", 900),
-	roman("D", 500),
-	roman("CD", 400),
-	roman("C", 100),
-	roman("XC", 90),
-	roman("L", 50),
-	roman("XL", 40),
-	roman("X", 10),
-	roman("IX", 9),
-	roman("V", 5),
-	roman("IV", 4),
-	roman("I", 1),
+var conveyorBelt = []Converter{
+	trans("M", 1000),
+	trans("CM", 900),
+	trans("D", 500),
+	trans("CD", 400),
+	trans("C", 100),
+	trans("XC", 90),
+	trans("L", 50),
+	trans("XL", 40),
+	trans("X", 10),
+	trans("IX", 9),
+	trans("V", 5),
+	trans("IV", 4),
+	trans("I", 1),
 }
 
 func printRoman(inputNumber int) string {
-	remain := inputNumber
-	result := ""
-	for _, belt := range setting {
-		if remain < 1 {
-			return result
+
+	num := Number{exp: "", value: inputNumber, remain: inputNumber}
+
+	for _, chain := range conveyorBelt {
+		if num.remain < 1 {
+			return num.exp
 		}
-		remain, result = belt(remain, result)
+		num = chain(num)
 	}
-	return result
+	return num.exp
 }
