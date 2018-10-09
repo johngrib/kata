@@ -1,9 +1,16 @@
 package main
 
 import (
+	"testing"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
+
+func TestGinkgo(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Tests Suite")
+}
 
 var _ = Describe("swap", func() {
 	It("change value of two variables", func() {
