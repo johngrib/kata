@@ -53,8 +53,18 @@ func putSimulation(set []Item, s Sack) Sack {
 	if len(set) < 1 {
 		return s
 	}
-	s1 := putSimulation(set[1:], s.Put(set[0]))
-	s2 := putSimulation(set[1:], s)
+	rs := make(chan Sack, 2)
+
+	go func() {
+		rs <- putSimulation(set[1:], s.Put(set[0]))
+	}()
+	go func() {
+		rs <- putSimulation(set[1:], s)
+	}()
+
+	s1 := <-rs
+	s2 := <-rs
+
 	if s1.value > s2.value {
 		return s1
 	}
