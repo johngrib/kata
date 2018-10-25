@@ -13,8 +13,3 @@ func comb(set []int, n int, k int) {
 	comb(set, n-1, k)
 	comb(append(set, n), n-1, k-1)
 }
-
-func main() {
-	fmt.Println("------")
-	comb([]int{}, 3, 2)
-}
