@@ -70,7 +70,3 @@ func run(n int) Board {
 	}
 	return mat
 }
-
-func main() {
-	fmt.Println(run(6))
-}
