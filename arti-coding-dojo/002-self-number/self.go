@@ -7,10 +7,9 @@ import (
 const OFFSET int32 = '0'
 
 func generateFrom(n int) int {
-	runes := []int32(strconv.Itoa(n))
 	var sum int32 = 0
-	for _, r := range runes {
-		sum += r - OFFSET
+	for _, digit := range []int32(strconv.Itoa(n)) {
+		sum += digit - OFFSET
 	}
 	return n + int(sum)
 }
