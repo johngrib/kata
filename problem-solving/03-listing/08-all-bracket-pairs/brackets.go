@@ -35,3 +35,8 @@ func paren(to_open, to_close int, arr []int, arr_size int) {
 		paren(to_open, to_close-1, arr, arr_size+1)
 	}
 }
+
+func printParens(n int) {
+	arr := make([]int, n*2, n*2)
+	paren(n, 0, arr, 0)
+}

@@ -2,9 +2,7 @@ package main
 
 func ExampleBracket() {
 
-	n := 3
-	arr := make([]int, n*2, n*2)
-	paren(n, 0, arr, 0)
+	printParens(3)
 
 	// Output:
 	//((()))
@@ -16,9 +14,7 @@ func ExampleBracket() {
 
 func ExampleBracket4() {
 
-	n := 4
-	arr := make([]int, n*2, n*2)
-	paren(n, 0, arr, 0)
+	printParens(4)
 	// Output:
 	//(((())))
 	//((()()))
