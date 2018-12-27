@@ -14,7 +14,7 @@ func main() {
 	fmt.Print("What is the input string? ")
 
 	scanner := bufio.NewScanner(os.Stdin)
-	var input string = ""
+	var input string
 
 	if scanner.Scan() {
 		input = scanner.Text()
