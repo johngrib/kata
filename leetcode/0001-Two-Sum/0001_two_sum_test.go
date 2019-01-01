@@ -13,12 +13,24 @@ func TestGinkgo(t *testing.T) {
 }
 
 var _ = Describe("twoSum", func() {
-	It("basic", func() {
-		result := twoSum([]int{2, 7, 11, 15}, 9)
-		Expect(result).To(Equal([]int{0, 1}))
+	Context("with a basic case", func() {
+		given := []int{2, 7, 11, 15}
+		target := 9
+
+		It("returns indices of 2 and 7", func() {
+			result := twoSum(given, target)
+
+			Expect(result).To(Equal([]int{0, 1}))
+		})
 	})
-	It("custom", func() {
-		result := twoSum([]int{3, 3}, 6)
-		Expect(result).To(Equal([]int{0, 1}))
+	Context("with a custom case", func() {
+		given := []int{3, 3}
+		target := 6
+
+		It("returns indices of 3 and 3", func() {
+			result := twoSum(given, target)
+
+			Expect(result).To(Equal([]int{0, 1}))
+		})
 	})
 })
